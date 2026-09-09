@@ -6,7 +6,6 @@ import {
   SendSmsResult,
   SimCard,
 } from "./ExpoAndroidSmsSender.types";
-import ExpoAndroidSmsSenderModule from "./ExpoAndroidSmsSenderModule";
 
 export * from "./ExpoAndroidSmsSender.types";
 
@@ -18,12 +17,7 @@ export * from "./ExpoAndroidSmsSender.types";
  *
  * @returns A promise that resolves to a {@link CanSendSmsResult} object indicating capability and reason if unavailable.
  */
-export async function canSendSms(): Promise<CanSendSmsResult> {
-  if (!ExpoAndroidSmsSenderModule || typeof ExpoAndroidSmsSenderModule.canSendSms !== 'function') {
-    return { capable: false, reason: 'NOT_SUPPORTED' };
-  }
-  return await ExpoAndroidSmsSenderModule.canSendSms();
-}
+export declare function canSendSms(): Promise<CanSendSmsResult>;
 
 /**
  * Retrieves a list of available SIM cards on the device.
@@ -38,13 +32,7 @@ export async function canSendSms(): Promise<CanSendSmsResult> {
  *
  * @throws {Error} If permission is denied or there is a failure in retrieving SIM card info.
  */
-export async function getSimCards(): Promise<SimCard[]> {
-  if (!ExpoAndroidSmsSenderModule || typeof ExpoAndroidSmsSenderModule.getSimCards !== 'function') {
-    return [];
-  }
-  const serialized = await ExpoAndroidSmsSenderModule.getSimCards();
-  return typeof serialized === 'string' ? JSON.parse(serialized) : serialized;
-}
+export declare function getSimCards(): Promise<SimCard[]>;
 
 /**
  * Sends an SMS message to a specified phone number.
@@ -73,21 +61,12 @@ export async function getSimCards(): Promise<SimCard[]> {
  *
  * @throws {Error} If sending the SMS fails due to permissions, invalid input, or system errors.
  */
-export async function sendSms(
+export declare function sendSms(
   phoneNumber: string,
   text: string,
   simCardId?: number,
   options?: SendSmsOptions
-): Promise<SendSmsResult> {
-  if (!ExpoAndroidSmsSenderModule || typeof ExpoAndroidSmsSenderModule.sendSms !== 'function') {
-    throw new Error('Native SMS module is not available on this platform.');
-  }
-  if (options && typeof ExpoAndroidSmsSenderModule.sendSmsWithOptions === 'function') {
-    return await ExpoAndroidSmsSenderModule.sendSmsWithOptions(phoneNumber, text, simCardId, options);
-  }
-  const res = await ExpoAndroidSmsSenderModule.sendSms(phoneNumber, text, simCardId);
-  return res || { success: true };
-}
+): Promise<SendSmsResult>;
 
 /**
  * Sends a list of SMS messages sequentially in a native background loop.
@@ -101,15 +80,16 @@ export async function sendSms(
  *
  * @returns A promise that resolves to a {@link BulkSmsReport} summary of sent and failed messages.
  */
-export async function sendBulkSms(
+export declare function sendBulkSms(
   messages: BulkSmsRecipient[],
   simCardId?: number,
   delayMs?: number
-): Promise<BulkSmsReport> {
-  if (!ExpoAndroidSmsSenderModule || typeof ExpoAndroidSmsSenderModule.sendBulkSms !== 'function') {
-    throw new Error('Native bulk SMS module is not available on this platform.');
-  }
-  return await ExpoAndroidSmsSenderModule.sendBulkSms(messages, simCardId, delayMs);
-}
+): Promise<BulkSmsReport>;
 
-export default { canSendSms, getSimCards, sendSms, sendBulkSms };
+declare const _default: {
+  canSendSms: typeof canSendSms;
+  getSimCards: typeof getSimCards;
+  sendSms: typeof sendSms;
+  sendBulkSms: typeof sendBulkSms;
+};
+export default _default;

@@ -1,42 +1,46 @@
 apply plugin: 'com.android.library'
 
 group = 'expo.modules.androidsmssender'
-version = '0.1.0'
+version = '1.0.3'
 
+// Apply Expo modules core plugin if available across Expo SDK releases
 def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
-apply from: expoModulesCorePlugin
-applyKotlinExpoModulesCorePlugin()
-useCoreDependencies()
-useExpoPublishing()
+if (expoModulesCorePlugin.exists()) {
+  apply from: expoModulesCorePlugin
+  applyKotlinExpoModulesCorePlugin()
+  useCoreDependencies()
+  useExpoPublishing()
+}
 
-// If you want to use the managed Android SDK versions from expo-modules-core, set this to true.
-// The Android SDK versions will be bumped from time to time in SDK releases and may introduce breaking changes in your module code.
-// Most of the time, you may like to manage the Android SDK versions yourself.
-def useManagedAndroidSdkVersions = false
-if (useManagedAndroidSdkVersions) {
-  useDefaultAndroidSdkVersions()
-} else {
-  buildscript {
-    // Simple helper that allows the root project to override versions declared by this library.
-    ext.safeExtGet = { prop, fallback ->
-      rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
-    }
-  }
-  project.android {
-    compileSdkVersion safeExtGet("compileSdkVersion", 34)
-    defaultConfig {
-      minSdkVersion safeExtGet("minSdkVersion", 21)
-      targetSdkVersion safeExtGet("targetSdkVersion", 34)
-    }
+// Helper to inherit SDK and version properties from the host root project
+buildscript {
+  ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
   }
 }
 
 android {
   namespace "expo.modules.androidsmssender"
+  // Dynamically adopt compileSdkVersion and targetSdkVersion from root project (defaulting to modern Android SDK 35)
+  compileSdkVersion safeExtGet("compileSdkVersion", 35)
+
   defaultConfig {
+    minSdkVersion safeExtGet("minSdkVersion", 24)
+    targetSdkVersion safeExtGet("targetSdkVersion", 35)
     versionCode 1
-    versionName "0.1.0"
+    versionName "1.0.3"
   }
+
+  // Consistent Java 17 bytecode target for Android ART compatibility across JDK 17 & JDK 21 environments
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
+
   lintOptions {
     abortOnError false
   }
@@ -44,4 +48,5 @@ android {
 
 dependencies {
   implementation 'com.google.code.gson:gson:2.10.1'
+  implementation 'androidx.core:core-ktx:1.13.1'
 }
