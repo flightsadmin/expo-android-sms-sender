@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "expo-android-sms-sender-example",
-    "slug": "expo-android-sms-sender-example",
+    "name": "expo-android-sms-sender-new-example",
+    "slug": "expo-android-sms-sender-new-example",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "auto",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -14,14 +14,14 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expo.modules.androidsmssender.example"
+      "bundleIdentifier": "expo.modules.androidsmssender.newexample"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "expo.modules.androidsmssender.example"
+      "package": "expo.modules.androidsmssender.newexample"
     },
     "web": {
       "favicon": "./assets/favicon.png"

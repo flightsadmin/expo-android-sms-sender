@@ -3,8 +3,18 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "expo-android-sms-sender": ["../src/index"],
-      "expo-android-sms-sender/*": ["../src/*"]
+      "expo-android-sms-sender": [
+        "../src/index"
+      ],
+      "expo-android-sms-sender/*": [
+        "../src/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
     }
-  }
+  },
+  "include": [
+    "src/**/*"
+  ]
 }
