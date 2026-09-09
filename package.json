@@ -21,13 +21,13 @@
     "expo-android-sms-sender",
     "ExpoAndroidSmsSender"
   ],
-  "repository": "https://github.com/flightsadmin/expo-android-sms-sender",
+  "repository": "https://github.com/Nikola352/expo-android-sms-sender",
   "bugs": {
-    "url": "https://github.com/flightsadmin/expo-android-sms-sender/issues"
+    "url": "https://github.com/Nikola352/expo-android-sms-sender/issues"
   },
   "author": "Nikola Jolovic <nikolajolovic02@gmail.com> (https://github.com/Nikola352)",
   "license": "MIT",
-  "homepage": "https://github.com/flightsadmin/expo-android-sms-sender#readme",
+  "homepage": "https://github.com/Nikola352/expo-android-sms-sender#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/react": "~18.3.12",
